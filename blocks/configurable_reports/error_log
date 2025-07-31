@@ -1,0 +1,174 @@
+[19-May-2025 14:09:00 Europe/London] Default exception handler: Error reading from database Debug: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'LIMIT 0, 5000' at line 31
+SELECT
+  u.id AS "User ID",
+  CONCAT(u.firstname, ' ', u.lastname) AS "Nama",
+  u.email AS "Email",
+  (
+    SELECT data 
+    FROM mdl_user_info_data 
+    WHERE userid = u.id 
+      AND fieldid = (
+        SELECT id 
+        FROM mdl_user_info_field 
+        WHERE shortname = 'nomorwa'
+      )
+  ) AS "Nomor HP",
+  ROUND(gg.finalgrade, 2) AS "Nilai Akhir",
+  gl.letter AS "Predikat"
+FROM mdl_user u
+JOIN mdl_role_assignments ra ON ra.userid = u.id
+JOIN mdl_context ctx ON ctx.id = ra.contextid AND ctx.contextlevel = 50
+JOIN mdl_course c ON c.id = ctx.instanceid
+JOIN mdl_grade_items gi ON gi.courseid = c.id AND gi.itemtype = 'course'
+JOIN mdl_grade_grades gg ON gg.itemid = gi.id AND gg.userid = u.id
+LEFT JOIN mdl_grade_letters gl 
+  ON gl.contextid = gi.contextid
+     AND gg.finalgrade BETWEEN gl.lowerboundary AND (
+        SELECT MIN(lowerboundary) 
+        FROM mdl_grade_letters 
+        WHERE lowerboundary > gl.lowerboundary AND contextid = gi.contextid
+     )
+WHERE c.id = 3
+ORDER BY u.lastname; LIMIT 0, 5000
+[array (
+)]
+Error code: dmlreadexception
+* line 497 of /lib/dml/moodle_database.php: dml_read_exception thrown
+* line 293 of /lib/dml/moodle_read_slave_trait.php: call to moodle_database->query_end()
+* line 1303 of /lib/dml/mysqli_native_moodle_database.php: call to mysqli_native_moodle_database->query_end()
+* line 135 of /blocks/configurable_reports/reports/sql/report.class.php: call to mysqli_native_moodle_database->get_recordset_sql()
+* line 192 of /blocks/configurable_reports/components/customsql/form.php: call to report_sql->execute_query()
+* line 109 of /blocks/configurable_reports/components/customsql/form.php: call to customsql_form->validation_low_security()
+* line 674 of /lib/formslib.php: call to customsql_form->validation()
+* line 610 of /lib/formslib.php: call to moodleform->validate_defined_fields()
+* line 720 of /lib/formslib.php: call to moodleform->is_validated()
+* line 105 of /blocks/configurable_reports/editcomp.php: call to moodleform->get_data()
+
+[19-May-2025 14:11:27 Europe/London] Default exception handler: Error reading from database Debug: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'LIMIT 0, 5000' at line 32
+SELECT
+  u.id AS "User ID",
+  CONCAT(u.firstname, ' ', u.lastname) AS "Nama",
+  u.email AS "Email",
+  (
+    SELECT data 
+    FROM mdl_user_info_data 
+    WHERE userid = u.id 
+      AND fieldid = (
+        SELECT id 
+        FROM mdl_user_info_field 
+        WHERE shortname = 'nomorwa'
+      )
+  ) AS "Nomor HP",
+  ROUND(gg.finalgrade, 2) AS "Nilai Akhir",
+  gl.letter AS "Predikat"
+FROM mdl_user u
+JOIN mdl_role_assignments ra ON ra.userid = u.id
+JOIN mdl_context ctx ON ctx.id = ra.contextid AND ctx.contextlevel = 50
+JOIN mdl_course c ON c.id = ctx.instanceid
+JOIN mdl_grade_items gi ON gi.courseid = c.id AND gi.itemtype = 'course'
+JOIN mdl_grade_grades gg ON gg.itemid = gi.id AND gg.userid = u.id
+LEFT JOIN mdl_grade_letters gl 
+  ON gl.contextid = gi.contextid
+     AND gg.finalgrade BETWEEN gl.lowerboundary AND (
+        SELECT MIN(lowerboundary) 
+        FROM mdl_grade_letters 
+        WHERE lowerboundary > gl.lowerboundary AND contextid = gi.contextid
+     )
+WHERE c.id = 3
+ORDER BY u.lastname
+LIMIT 0, 5000 LIMIT 0, 5000
+[array (
+)]
+Error code: dmlreadexception
+* line 497 of /lib/dml/moodle_database.php: dml_read_exception thrown
+* line 293 of /lib/dml/moodle_read_slave_trait.php: call to moodle_database->query_end()
+* line 1303 of /lib/dml/mysqli_native_moodle_database.php: call to mysqli_native_moodle_database->query_end()
+* line 135 of /blocks/configurable_reports/reports/sql/report.class.php: call to mysqli_native_moodle_database->get_recordset_sql()
+* line 192 of /blocks/configurable_reports/components/customsql/form.php: call to report_sql->execute_query()
+* line 109 of /blocks/configurable_reports/components/customsql/form.php: call to customsql_form->validation_low_security()
+* line 674 of /lib/formslib.php: call to customsql_form->validation()
+* line 610 of /lib/formslib.php: call to moodleform->validate_defined_fields()
+* line 720 of /lib/formslib.php: call to moodleform->is_validated()
+* line 105 of /blocks/configurable_reports/editcomp.php: call to moodleform->get_data()
+
+[19-May-2025 14:12:47 Europe/London] Default exception handler: Error reading from database Debug: Unknown column 'gi.contextid' in 'ON'
+SELECT
+  u.id AS "User ID",
+  CONCAT(u.firstname, ' ', u.lastname) AS "Nama",
+  u.email AS "Email",
+  (
+    SELECT data 
+    FROM mdl_user_info_data 
+    WHERE userid = u.id 
+      AND fieldid = (
+        SELECT id 
+        FROM mdl_user_info_field 
+        WHERE shortname = 'nomorwa'
+      )
+  ) AS "Nomor HP",
+  ROUND(gg.finalgrade, 2) AS "Nilai Akhir",
+  gl.letter AS "Predikat"
+FROM mdl_user u
+JOIN mdl_role_assignments ra ON ra.userid = u.id
+JOIN mdl_context ctx ON ctx.id = ra.contextid AND ctx.contextlevel = 50
+JOIN mdl_course c ON c.id = ctx.instanceid
+JOIN mdl_grade_items gi ON gi.courseid = c.id AND gi.itemtype = 'course'
+JOIN mdl_grade_grades gg ON gg.itemid = gi.id AND gg.userid = u.id
+LEFT JOIN mdl_grade_letters gl 
+  ON gl.contextid = gi.contextid
+     AND gg.finalgrade BETWEEN gl.lowerboundary AND (
+        SELECT MIN(lowerboundary) 
+        FROM mdl_grade_letters 
+        WHERE lowerboundary > gl.lowerboundary AND contextid = gi.contextid
+     )
+WHERE c.id = 3
+ORDER BY u.lastname LIMIT 0, 5000
+[array (
+)]
+Error code: dmlreadexception
+* line 497 of /lib/dml/moodle_database.php: dml_read_exception thrown
+* line 293 of /lib/dml/moodle_read_slave_trait.php: call to moodle_database->query_end()
+* line 1303 of /lib/dml/mysqli_native_moodle_database.php: call to mysqli_native_moodle_database->query_end()
+* line 135 of /blocks/configurable_reports/reports/sql/report.class.php: call to mysqli_native_moodle_database->get_recordset_sql()
+* line 192 of /blocks/configurable_reports/components/customsql/form.php: call to report_sql->execute_query()
+* line 109 of /blocks/configurable_reports/components/customsql/form.php: call to customsql_form->validation_low_security()
+* line 674 of /lib/formslib.php: call to customsql_form->validation()
+* line 610 of /lib/formslib.php: call to moodleform->validate_defined_fields()
+* line 720 of /lib/formslib.php: call to moodleform->is_validated()
+* line 105 of /blocks/configurable_reports/editcomp.php: call to moodleform->get_data()
+
+[19-May-2025 20:04:07 Europe/London] Default exception handler: Error reading from database Debug: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'LIMIT 0, 5000' at line 6
+SELECT gi.id AS gradeitemid, gi.itemname
+FROM mdl_grade_items gi
+JOIN mdl_course c ON gi.courseid = c.id
+WHERE c.id = 3
+  AND gi.itemtype = 'mod'
+  AND gi.itemmodule = 'quiz'; LIMIT 0, 5000
+[array (
+)]
+Error code: dmlreadexception
+* line 497 of /lib/dml/moodle_database.php: dml_read_exception thrown
+* line 293 of /lib/dml/moodle_read_slave_trait.php: call to moodle_database->query_end()
+* line 1303 of /lib/dml/mysqli_native_moodle_database.php: call to mysqli_native_moodle_database->query_end()
+* line 135 of /blocks/configurable_reports/reports/sql/report.class.php: call to mysqli_native_moodle_database->get_recordset_sql()
+* line 192 of /blocks/configurable_reports/components/customsql/form.php: call to report_sql->execute_query()
+* line 109 of /blocks/configurable_reports/components/customsql/form.php: call to customsql_form->validation_low_security()
+* line 674 of /lib/formslib.php: call to customsql_form->validation()
+* line 610 of /lib/formslib.php: call to moodleform->validate_defined_fields()
+* line 720 of /lib/formslib.php: call to moodleform->is_validated()
+* line 105 of /blocks/configurable_reports/editcomp.php: call to moodleform->get_data()
+
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:14 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
+[19-May-2025 20:13:33 Europe/London] PHP Deprecated:  str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in /home/nurulirf/lms.nurulirfanjember.com/blocks/configurable_reports/reports/sql/report.class.php on line 197
